@@ -3,13 +3,13 @@ import { useMenuStore } from "@/providers/menu"
 import { PagenameEnum } from "@/stores/menu"
 
 import { useEffect } from "react"
-import { DisplayContainerItem, DisplayContainerItemI } from "../ui/layout/displayItem/DisplayContainerItem"
+import { DisplayContainerItemI } from "../ui/layout/displayItem/DisplayContainerItem"
 
 type PageI = DisplayContainerItemI & {
     name: PagenameEnum
 }
 
-export const Page = ({ children, name, ...props }: PageI) => {
+export const Page = ({ children, name }: PageI) => {
 
     const namePage = useMenuStore((state) => state.namePage)
 
@@ -18,6 +18,6 @@ export const Page = ({ children, name, ...props }: PageI) => {
     }, [])
 
 
-    return <DisplayContainerItem {...props}>
-        {children}</DisplayContainerItem>
+    return <>
+        {children}</>
 }

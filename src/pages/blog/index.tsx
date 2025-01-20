@@ -1,20 +1,28 @@
-import { DisplayCenterItem } from "@/components/ui/layout/displayItem/DisplayCenterItem"
 import { BlogCard } from "./components/Card"
+import { DisplayItem } from "@/components/ui/layout/displayItem/DisplayItem"
 
 export const BlogPage = () => {
-    return <DisplayCenterItem className="h-full m-auto">
+    return <DisplayItem className={`h-full w-full relative`}>
         <BlogCard  blogs={[
             {
                 text: "text",
                 header:'blog',
-                image:'/'
+                image:'/',
+                id: '0'
             },
             {
                 text: "text 2",
                 header:'blog 2',
-                image:'/ 2'
+                image:'/ 2',
+                id:'1'
+            },
+            {
+                text: "text 3",
+                header:'blog 3',
+                image:'/ 3',
+                id:'2'
             }
         ]}/>
 
-    </DisplayCenterItem>
+    </DisplayItem>
 }

@@ -1,14 +1,16 @@
 'use client'
+import { useScreenStore } from "@/providers/screen"
 import { useEffect, useState } from "react"
 
 export const usePortrait = () => {
     const [isPortrait, setIsPortrait] = useState<boolean | undefined>(undefined)
 
-
+    const isMobile = useScreenStore(state=>state.isMobile)
+ 
     useEffect(() => {
         const portrait = window.matchMedia("(orientation: portrait)")
         const checkIsPortrait = (match: MediaQueryList | MediaQueryListEvent) => {
-            return match.matches
+            return isMobile ? match.matches : true
         }
 
         const handleIsPortrait = () => {
@@ -40,7 +42,7 @@ export const usePortrait = () => {
         return () => {
             portrait.removeEventListener('change', handlePortraitSetUp)
         }
-    }, [])
+    }, [isMobile])
 
     return {
         isPortrait

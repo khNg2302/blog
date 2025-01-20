@@ -9,6 +9,7 @@ import { TextStoreProvider } from "@/providers/text";
 import { MenuItemProvider } from "@/providers/menuItem";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { PortraitProvider } from "@/providers/portrait";
+import { ScreenProvider } from "@/providers/screen";
 
 export default function RootLayout({
   children,
@@ -18,32 +19,35 @@ export default function RootLayout({
   return (
     <html >
       <body className="overflow-hidden">
-        <PortraitProvider>
+        <ScreenProvider>
 
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <TextStoreProvider>
-              <MenuStoreProvider>
-                <SidebarProvider defaultOpen={false}>
-                  <MenuItemProvider>
+          <PortraitProvider>
 
-                    <Menu />
-                  </MenuItemProvider>
-                  <DisplayColumnItem className="w-full h-screen">
-                    <TopBar></TopBar>
-                    <DisplayScrollItem>
-                      {children}
-                    </DisplayScrollItem>
-                  </DisplayColumnItem>
-                </SidebarProvider>
-              </MenuStoreProvider>
-            </TextStoreProvider>
-          </ThemeProvider>
-        </PortraitProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <TextStoreProvider>
+                <MenuStoreProvider>
+                  <SidebarProvider defaultOpen={false}>
+                    <MenuItemProvider>
+
+                      <Menu />
+                    </MenuItemProvider>
+                    <DisplayColumnItem className="w-full h-screen">
+                      <TopBar></TopBar>
+                      <DisplayScrollItem>
+                        {children}
+                      </DisplayScrollItem>
+                    </DisplayColumnItem>
+                  </SidebarProvider>
+                </MenuStoreProvider>
+              </TextStoreProvider>
+            </ThemeProvider>
+          </PortraitProvider>
+        </ScreenProvider>
       </body>
     </html>
   );

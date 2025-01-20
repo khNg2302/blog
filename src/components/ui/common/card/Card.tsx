@@ -30,8 +30,8 @@ const CardHeader = ({ children }: ElementType<unknown>) => {
 const CardContent = ({ children, className, isPortrait }: ElementType<unknown> & CardProps) => {
     return isPortrait ? <DisplayColumnItem className={cn("flex-1 gap-2", className)}>
         {children}
-    </DisplayColumnItem> : <DisplayFullScreenMedia className="flex-1">
-        <DisplayColumnItem className="h-full w-full">
+    </DisplayColumnItem> : <DisplayFullScreenMedia className={cn(className)}>
+        <DisplayColumnItem className={cn("h-full w-full")}>
             {children}
 
         </DisplayColumnItem>

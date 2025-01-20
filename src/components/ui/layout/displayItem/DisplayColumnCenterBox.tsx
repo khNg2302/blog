@@ -4,7 +4,7 @@ import { DisplayColumnItem, DisplayColumnItemI } from "./DisplayColumnItem"
 type DisplayColumnCenterBoxI = DisplayColumnItemI
 
 export const DisplayColumnCenterBox = ({ children, className }: DisplayColumnCenterBoxI) => {
-    return <DisplayColumnItem className={cn(className,'justify-center items-center gap-2 m-auto')}>
+    return <DisplayColumnItem className={cn('justify-center items-center gap-2 m-auto',className)}>
         {children}
     </DisplayColumnItem>
 } 

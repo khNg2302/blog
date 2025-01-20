@@ -4,62 +4,69 @@ import { CardSessionView } from "@/components/ui/common/card/CardSessionView";
 import { DefaultCard } from "@/components/ui/common/card/Default"
 import { Avatar, CardImage } from "@/components/ui/common/image/Image"
 import { DisplayColumnItem } from "@/components/ui/layout/displayItem/DisplayColumnItem";
+import { DisplayContainerItem } from "@/components/ui/layout/displayItem/DisplayContainerItem";
+import { cn } from "@/lib/utils";
+import { ItemType } from "@/types/element";
 import { Heart, MessageCircleMore, Share2 } from 'lucide-react';
 
 type BlogType = {
     header: string
     text: string
     image: string
-}
+} & ItemType
 
 export type BlogCardI = {
     blogs: BlogType[]
 }
 
 export const BlogCard = ({ blogs }: BlogCardI) => {
-    return <CardSessionView className="h-full w-auto aspect-[9/6] max-w-full">
-        <DefaultCard>
-            {({ isPortrait }) => (
-                <>
-                    <CardSessionView.Content isPortrait={isPortrait}>
-                        {blogs?.map((blog,index) => {
-                            return <DisplayColumnItem key={index} className="h-full relative">
+    return <CardSessionView className="h-full w-full max-w-full">
+        {({ isPortrait }) => (
+            <>
+                <CardSessionView.Content isPortrait={isPortrait} contents={blogs}>
+                    {({ text, header }) => (
+
+                        <DisplayContainerItem className="h-full relative">
+                            <DisplayColumnItem className={cn("h-full gap-2")}>
                                 <CardImage alt='blog image' src='/assists/images/logo.jpg' />
                                 <CardSessionView.ContentCaption isPortrait={isPortrait}>
-                                    <DefaultCard.Header>
-                                        <Avatar alt='blog image' src='/assists/images/logo.jpg' />
-                                        {blog.header}
-                                    </DefaultCard.Header>
-                                    <DisplayColumnItem>
-                                        {blog.text}
+
+                                    <DisplayColumnItem className="gap-2">
+                                        <DefaultCard.Header>
+                                            <Avatar alt='blog image' src='/assists/images/logo.jpg' />
+                                            {header}
+                                        </DefaultCard.Header>
+                                        {text}
                                     </DisplayColumnItem>
                                 </CardSessionView.ContentCaption>
                             </DisplayColumnItem>
-                        })}
 
-                    </CardSessionView.Content>
+                        </DisplayContainerItem>
+                    )}
 
-                    {blogs?.length > 0 && <CardSessionView.Footer isPortrait={isPortrait}>
-                        <>
-                            <GhostIconWithUnderTextAppButton>
-                                <Heart />
-                                Like
-                            </GhostIconWithUnderTextAppButton>
-                            <GhostIconWithUnderTextAppButton>
-                                <MessageCircleMore />
-                                Like
-                            </GhostIconWithUnderTextAppButton>
-                            <GhostIconWithUnderTextAppButton>
-                                <Share2 />
-                                Like
-                            </GhostIconWithUnderTextAppButton>
+                </CardSessionView.Content>
 
-                        </>
-                    </CardSessionView.Footer>}
+                {blogs?.length > 0 && <CardSessionView.Footer isPortrait={isPortrait}>
+                    <>
+                        <GhostIconWithUnderTextAppButton>
+                            <Heart />
+                            Like
+                        </GhostIconWithUnderTextAppButton>
+                        <GhostIconWithUnderTextAppButton>
+                            <MessageCircleMore />
+                            Comment
+                        </GhostIconWithUnderTextAppButton>
+                        <GhostIconWithUnderTextAppButton>
+                            <Share2 />
+                            Shared
+                        </GhostIconWithUnderTextAppButton>
+
+                    </>
+                </CardSessionView.Footer>}
 
 
-                </>
-            )}
-        </DefaultCard>
+            </>
+        )}
+
     </CardSessionView>
 }
