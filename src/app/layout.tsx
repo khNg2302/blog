@@ -1,5 +1,5 @@
 import { Menu } from "@/components/menu";
-import "@/styles/index.css"
+import "@/styles/index.css";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { DisplayColumnItem } from "@/components/ui/layout/displayItem/DisplayColumnItem";
 import { TopBar } from "@/components/topBar";
@@ -10,6 +10,7 @@ import { MenuItemProvider } from "@/providers/menuItem";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { PortraitProvider } from "@/providers/portrait";
 import { ScreenProvider } from "@/providers/screen";
+import { Toaster } from "@/components/ui/toaster";
 
 export default function RootLayout({
   children,
@@ -17,12 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html >
+    <html>
       <body className="overflow-hidden">
+        <Toaster />
         <ScreenProvider>
-
           <PortraitProvider>
-
             <ThemeProvider
               attribute="class"
               defaultTheme="system"
@@ -33,14 +33,11 @@ export default function RootLayout({
                 <MenuStoreProvider>
                   <SidebarProvider defaultOpen={false}>
                     <MenuItemProvider>
-
                       <Menu />
                     </MenuItemProvider>
                     <DisplayColumnItem className="w-full h-screen">
                       <TopBar></TopBar>
-                      <DisplayScrollItem>
-                        {children}
-                      </DisplayScrollItem>
+                      <DisplayScrollItem>{children}</DisplayScrollItem>
                     </DisplayColumnItem>
                   </SidebarProvider>
                 </MenuStoreProvider>

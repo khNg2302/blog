@@ -1,8 +1,6 @@
 import { Page } from "@/components/page";
 import { DisplayItem } from "@/components/ui/layout/displayItem/DisplayItem";
-import { cn } from "@/lib/utils";
 import { PagenameEnum } from "@/stores/menu";
-
 
 export default function BlogLayout({
   children,
@@ -10,11 +8,8 @@ export default function BlogLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <Page  name={PagenameEnum.blog}>
-      <DisplayItem className={cn('h-full')}>
-        {children}
-
-      </DisplayItem>
+    <Page name={PagenameEnum.blog}>
+      <DisplayItem className={`h-full w-full relative`}>{children}</DisplayItem>
     </Page>
   );
 }

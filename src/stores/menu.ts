@@ -6,9 +6,14 @@ export enum PagenameEnum {
     messenger = "messenger"
 }
 
+export enum PathnameEnum {
+    create_blog = "create_blog"
+}
+
 export type MenuStoreStateType = {
     hidden?: boolean
     pagename?: PagenameEnum
+    pathnamePage?: PathnameEnum
 }
 
 
@@ -22,15 +27,20 @@ type NamePageParamsType = {
     name: PagenameEnum
 }
 
+type NamePathPageParamsType = {
+    path: PathnameEnum
+}
+
 export type MenuStoreActionType = {
     displaySidebar: (params: DisplaySidebarHandlerParamsType) => void
     namePage: ({ name }: NamePageParamsType) => void
-
+    namePathPage: ({ path }: NamePathPageParamsType) => void
 }
 
 const initialMenuState = {
     hidden: true,
     pageName: undefined,
+    pathnamePage: undefined
 
 }
 
@@ -53,19 +63,38 @@ export const createMenuStore = () => {
         return name
     }
 
+    const pathnamePage = ({ path }: NamePathPageParamsType) => {
+        return path
+    }
+
+    const resetPathnamePage = () => {
+
+        return undefined
+    }
 
 
-    return createStore<MenuStoreStateType & MenuStoreActionType>()((set) => ({
+
+    return createStore<MenuStoreStateType & MenuStoreActionType>()((set, get) => ({
         ...initialMenuState,
         displaySidebar: ({ hidden, pathname }) => {
-
             set({ hidden: displaySidebar({ hidden, pathname }) })
         },
 
         namePage: ({ name }) => {
-            set({ pagename: namePage({ name }) })
+            const { pagename } = get()
+            set({
+                pagename: namePage({ name }),
+            })
+            if (pagename) {
+                set({
+                    pathnamePage: resetPathnamePage()
+                })
+            }
         },
 
+        namePathPage: ({ path }) => {
+            set({ pathnamePage: pathnamePage({ path }) })
+        }
     }))
 }
 
