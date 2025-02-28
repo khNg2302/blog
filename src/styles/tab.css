@@ -1,0 +1,7 @@
+.heretical-tab-navigation-item {
+  @apply border-r pr-2;
+}
+
+.heretical-tab-navigation-item:last-child {
+  @apply border-0 pr-0;
+}

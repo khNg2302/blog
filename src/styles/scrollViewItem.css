@@ -1,0 +1,26 @@
+.verticalScrollItem {
+  @apply absolute top-[100%] left-0 w-full h-full opacity-5;
+}
+
+.verticalScrollItem.active {
+  @apply !top-0 left-0;
+  animation: appear 0.15s ease-in-out forwards;
+}
+
+.widthScrollItem {
+  @apply absolute top-[100%] left-[100%] w-full h-full opacity-5;
+}
+
+.widthScrollItem.active {
+  @apply !top-0 left-0;
+  animation: appear 0.15s ease-in-out forwards;
+}
+
+@keyframes appear {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
