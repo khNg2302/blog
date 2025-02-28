@@ -1,72 +1,131 @@
-'use client'
-import { GhostIconWithUnderTextAppButton } from "@/components/ui/common/button/Button"
+"use client";
+import { GhostIconWithUnderTextAppButton } from "@/components/ui/common/button/Button";
 import { CardSessionView } from "@/components/ui/common/card/CardSessionView";
-import { DefaultCard } from "@/components/ui/common/card/Default"
-import { Avatar, CardImage } from "@/components/ui/common/image/Image"
-import { DisplayColumnItem } from "@/components/ui/layout/displayItem/DisplayColumnItem";
-import { DisplayContainerItem } from "@/components/ui/layout/displayItem/DisplayContainerItem";
-import { cn } from "@/lib/utils";
-import { ItemType } from "@/types/element";
-import { Heart, MessageCircleMore, Share2 } from 'lucide-react';
+import { DisplayPhotos } from "@/components/ui/common/files/photos";
+import { Avatar } from "@/components/ui/common/image/Image";
+import { DisplayItem } from "@/components/ui/layout/displayItem/DisplayItem";
+import { CardBlogFrame } from "@/feature/blog/CardBlogFrame";
+
+import { ChildrenPassPropsType, ItemType } from "@/types/element";
+import { MessageCircleMore, Share2 } from "lucide-react";
+import { ReactNode, useState } from "react";
+import { useSessionViewProvider } from "@/providers/sessionView";
+import { LikeButton } from "@/components/ui/common/button/Like";
 
 type BlogType = {
-    header: string
-    text: string
-    image: string
-} & ItemType
+  header: string;
+  text: string;
+  image: string;
+} & ItemType;
 
 export type BlogCardI = {
-    blogs: BlogType[]
-}
+  blogs: BlogType[];
+  commentComp: ReactNode;
+  likeComp: ReactNode;
+  shareComp: ReactNode;
+};
 
-export const BlogCard = ({ blogs }: BlogCardI) => {
-    return <CardSessionView className="h-full w-full max-w-full">
-        {({ isPortrait }) => (
-            <>
-                <CardSessionView.Content isPortrait={isPortrait} contents={blogs}>
-                    {({ text, header }) => (
+const BlogPrefix = "blog";
 
-                        <DisplayContainerItem className="h-full relative">
-                            <DisplayColumnItem className={cn("h-full gap-2")}>
-                                <CardImage alt='blog image' src='/assists/images/logo.jpg' />
-                                <CardSessionView.ContentCaption isPortrait={isPortrait}>
+export const BlogCard = ({
+  blogs,
+  commentComp,
+  likeComp,
+  shareComp,
+}: BlogCardI) => {
+  const [currentBlog, setCurrentBlog] = useState(BlogPrefix + "0");
+  const { setContentDisplay } = useSessionViewProvider();
 
-                                    <DisplayColumnItem className="gap-2">
-                                        <DefaultCard.Header>
-                                            <Avatar alt='blog image' src='/assists/images/logo.jpg' />
-                                            {header}
-                                        </DefaultCard.Header>
-                                        {text}
-                                    </DisplayColumnItem>
-                                </CardSessionView.ContentCaption>
-                            </DisplayColumnItem>
+  const openComment = () => {
+    setContentDisplay(commentComp);
+  };
 
-                        </DisplayContainerItem>
-                    )}
+  const openLike = () => {
+    setContentDisplay(likeComp);
+  };
 
-                </CardSessionView.Content>
+  const openShare = () => {
+    setContentDisplay(shareComp);
+  };
 
-                {blogs?.length > 0 && <CardSessionView.Footer isPortrait={isPortrait}>
-                    <>
-                        <GhostIconWithUnderTextAppButton>
-                            <Heart />
-                            Like
-                        </GhostIconWithUnderTextAppButton>
-                        <GhostIconWithUnderTextAppButton>
-                            <MessageCircleMore />
-                            Comment
-                        </GhostIconWithUnderTextAppButton>
-                        <GhostIconWithUnderTextAppButton>
-                            <Share2 />
-                            Shared
-                        </GhostIconWithUnderTextAppButton>
-
-                    </>
-                </CardSessionView.Footer>}
-
-
-            </>
+  const CardFooter = () => {
+    return (
+      <>
+        {blogs?.length > 0 && (
+          <>
+            <GhostIconWithUnderTextAppButton onClick={openLike}>
+              <LikeButton isLiked />
+              Like
+            </GhostIconWithUnderTextAppButton>
+            <GhostIconWithUnderTextAppButton onClick={openComment}>
+              <MessageCircleMore />
+              Comment
+            </GhostIconWithUnderTextAppButton>
+            <GhostIconWithUnderTextAppButton onClick={openShare}>
+              <Share2 />
+              Shared
+            </GhostIconWithUnderTextAppButton>
+          </>
         )}
+      </>
+    );
+  };
 
-    </CardSessionView>
-}
+  const content = ({ isPortrait }: { isPortrait: boolean }) => {
+    const renderContent: ChildrenPassPropsType<BlogType> = ({
+      header,
+      text,
+      prefixItem,
+    }) => (
+      <>
+        <CardBlogFrame.Content
+          isPortrait={isPortrait}
+          cardText={text}
+          cardFiles={
+            <DisplayPhotos
+              onSetCurrentId={() => {}}
+              currentParentId={currentBlog}
+              prefixItem={"photos-blog" + prefixItem}
+              parentId={prefixItem as string}
+              photos={[
+                { id: "1", src: "/assists/images/logo.jpg" },
+                { id: "2", src: "/assists/images/logo.jpg" },
+              ]}
+              isPortrait={isPortrait}
+            />
+          }
+          cardHeader={
+            <>
+              <Avatar alt="blog image" src="/assists/images/logo.jpg" />
+              <DisplayItem>{header}</DisplayItem>
+            </>
+          }
+        ></CardBlogFrame.Content>
+      </>
+    );
+    return renderContent;
+  };
+
+  const handleSetCurrentBlog = (currentBlogId: string) => {
+    setCurrentBlog(currentBlogId);
+  };
+
+  return (
+    <CardBlogFrame cardFooter={<CardFooter />}>
+      {({ isPortrait }) => (
+        <>
+          <CardSessionView.Content
+            isPortrait={isPortrait}
+            contents={blogs}
+            prefixItem={BlogPrefix}
+            currentParentId={""}
+            parentId=""
+            onSetCurrentId={handleSetCurrentBlog}
+          >
+            {content({ isPortrait })}
+          </CardSessionView.Content>
+        </>
+      )}
+    </CardBlogFrame>
+  );
+};

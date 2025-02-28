@@ -12,7 +12,7 @@ import { Plus } from "lucide-react";
 const BlogMenuItems: MenuItemsType = [
   {
     title: "Create",
-    url: "/app/blog/create",
+    url: "/applications/blog/create",
     icon: Plus,
     path: PathnameEnum.create_blog,
   },

@@ -1,9 +1,16 @@
 "use client";
+import { SessionViewProvider } from "@/providers/sessionView";
 import { BlogCard } from "./components/Card";
+import { BlogComment } from "./components/Comment";
+import { BlogLike } from "./components/Like";
+import { BlogShare } from "./components/share";
 export const BlogPage = () => {
   return (
-    <>
+    <SessionViewProvider>
       <BlogCard
+        likeComp={<BlogLike />}
+        commentComp={<BlogComment />}
+        shareComp={<BlogShare />}
         blogs={[
           {
             text: "text",
@@ -25,6 +32,6 @@ export const BlogPage = () => {
           },
         ]}
       />
-    </>
+    </SessionViewProvider>
   );
 };
