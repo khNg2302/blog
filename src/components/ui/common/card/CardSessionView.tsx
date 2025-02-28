@@ -315,7 +315,11 @@ const FooterContentDrawer = () => {
   const { isDisplayContent, content } = useSessionViewProvider();
 
   return (
-    <>{isDisplayContent ? <FooterDrawer>{content}</FooterDrawer> : null}</>
+    <>
+      {isDisplayContent ? (
+        <FooterDrawer className="max-h-[50%]">{content}</FooterDrawer>
+      ) : null}
+    </>
   );
 };
 

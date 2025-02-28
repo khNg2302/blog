@@ -1,3 +1,5 @@
+import { Comments } from "@/components/comments";
+import { CommentItemType } from "@/components/comments/components/Comment";
 import { GhostAppButton } from "@/components/ui/common/button/Button";
 import { Input } from "@/components/ui/common/input/Input";
 import { DisplayColumnItem } from "@/components/ui/layout/displayItem/DisplayColumnItem";
@@ -9,8 +11,52 @@ import { Send, X } from "lucide-react";
 
 export const BlogComment = () => {
   const { hideContent } = useSessionViewProvider();
+  const comments: CommentItemType[] = [
+    {
+      id: "1",
+      date: "today",
+      src: "/assists/images/logo.jpg",
+      name: "user 1",
+      comment: "comment here",
+      relied: [
+        {
+          id: "2",
+          date: "today",
+          src: "/assists/images/logo.jpg",
+          name: "user 2",
+          comment: "rely comment here",
+          relied: [
+            {
+              id: "4",
+              date: "today",
+              src: "/assists/images/logo.jpg",
+              name: "user 1",
+              comment: "rely comment here",
+              relied: [],
+            },
+            {
+              id: "5",
+              date: "today",
+              src: "/assists/images/logo.jpg",
+              name: "user 1",
+              comment: "rely comment here",
+              relied: [],
+            },
+          ],
+        },
+        {
+          id: "3",
+          date: "today",
+          src: "/assists/images/logo.jpg",
+          name: "user 1",
+          comment: "rely comment here",
+          relied: [],
+        },
+      ],
+    },
+  ];
   return (
-    <DisplayColumnItem className="w-full h-full">
+    <DisplayColumnItem className="w-full h-full overflow-hidden">
       <HeaderBetweenItem
         title={"Comments"}
         icons={
@@ -21,9 +67,11 @@ export const BlogComment = () => {
           </>
         }
       ></HeaderBetweenItem>
-      <DisplayContainerItem className="flex-1">
+      <DisplayContainerItem className="flex-1 overflow-hidden">
         <DisplayColumnItem className="h-full">
-          <DisplayScrollItem>scroll comments</DisplayScrollItem>
+          <DisplayScrollItem>
+            <Comments comments={comments} />
+          </DisplayScrollItem>
           <Input
             subfix={
               <GhostAppButton>

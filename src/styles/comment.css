@@ -1,0 +1,11 @@
+.comment {
+  @apply ml-5;
+}
+.comment-relied {
+}
+
+.comment-relied::after {
+  content: "";
+  height: calc(100% - 36px);
+  @apply absolute top-5 left-0 border-gray-400 border-l w-5;
+}
